@@ -6,17 +6,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import java.io.FileNotFoundException;
 
 public class SearchSite {
     String SiteURL;
     String url_1;
     String search;
-    String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";
+    //String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36";
     Document doc;
 }
 
 class Riss extends SearchSite {
-    Riss(String search) {
+    Riss(String search) throws FileNotFoundException {
+        this.search = search;
         this.SiteURL = "http://www.riss.kr/index.do";
         HashMap<String,String> searchOpt = new HashMap();
         searchOpt.put("Dissertation","&cate=bib_t");
@@ -35,9 +37,10 @@ class Riss extends SearchSite {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+         
             System.out.println("Site Name: RISS");
             System.out.println("URL: " + SiteURL);
+            System.out.println("SearchRink: " + url_1);
             System.out.println("-------------------------------------------");
             
             Elements list = doc.select(".degree");
@@ -46,7 +49,6 @@ class Riss extends SearchSite {
                 System.out.println("Number " + count++);
                 System.out.println("Category: " + Opt[i]);
                 System.out.println("Title: "+ el.select(".txt > a").text());
-                String rink = new String();
                 System.out.println("Author: "+ el.select(".etc").text());
                 System.out.println("Rink: " + el.select("[href]").attr("abs:href").toString());
                 System.out.println("-------------------------------------------");
@@ -56,23 +58,45 @@ class Riss extends SearchSite {
     }
 }
 
-class Google extends SearchSite {
-    Google(String search) {
+class GoogleScholar extends SearchSite {
+    GoogleScholar(String search) throws FileNotFoundException {
         this.SiteURL = "https://scholar.google.co.kr/";
-        this.url_1 = "https://scholar.google.co.kr/scholar?hl=ko&as_sdt=0%2C5&q=" + search + "oq=";
+        this.url_1 = "https://scholar.google.co.kr/scholar?hl=ko&as_sdt=0%2C5&q=" + search + "&btnG=";
+    
+        try {
+            doc = Jsoup.connect(url_1).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Site Name: Google Scholar");
+        System.out.println("URL: " + SiteURL);
+        System.out.println("SearchRink: " + url_1);
+        System.out.println("-------------------------------------------");
+
+        Elements list = doc.select("#gs_res_ccl");
+        int count = 1;
+        for(Element el : list.select(".gs_ri")) {
+            System.out.println("Number " + count++);
+            System.out.println("Title: "+ el.select("h3 > a").text());
+            System.out.println("Author: "+ el.select(".gs_a").text());
+            System.out.println("Rink: " + el.select("[href]").attr("abs:href").toString());
+            System.out.println("-------------------------------------------");
+            System.out.println(); 
+        }
     }
 }
 
-class Kiss extends SearchSite {
-    Kiss(String search) {
+//http://eds.b.ebscohost.com/eds/search/basic?vid=0&sid=76522b17-8618-4cb0-b900-c507d2537117%40pdc-v-sessmgr02
+class Kiss extends SearchSite { 
+    Kiss(String search) throws FileNotFoundException {
         this.SiteURL = "http://search.koreanstudies.net/";
-    }
-}
+        this.url_1 = "http://search.koreanstudies.net/search/sch-result.asp";
 
-class Ntis extends SearchSite {
-    Ntis(String search) {
-        this.SiteURL = "https://www.ntis.go.kr/ThMain.do";
-        this.url_1 = "https://www.ntis.go.kr/ThSearchTotalList.do?sort=RANK%2FDESC%2CSS01%2FDESC&ntisYn=&searchWord="
-                + search;
+        try {
+            doc = Jsoup.connect(url_1).post();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
