@@ -1,5 +1,8 @@
 # JavaProject
 자바 개인 프로젝트
 
-hello guys!
-user agent setting("http://m.avalon.co.kr/check.html")
+버그 발생으로 대대적인 공사가 이루어지고 있는 현장입니다!
+
+공사 완료 후 온전한 파일을 커밋할 것입니다.
+불편을 끼쳐드려 죄송합니다.
+늦은 제출을 감수하더라도 15일 내로 제출하도록 하겠습니다.
