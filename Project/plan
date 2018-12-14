@@ -1,0 +1,11 @@
+Main - extcute
+
+SearchSite - 사이트마다 크롤링 설정
+
+FileIO - 검색결과 파일로 저장
+
+검색
+- 제목
+- URL
+
+javac -cp C:\Users\yujih\Documents\GitHub\Java-Project\Project\lib\jsoup-1.11.3.jar -d . pls\Main.java pls\SearchSite.java
