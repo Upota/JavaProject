@@ -3,11 +3,11 @@ package pls;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.io.FileNotFoundException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import java.io.FileNotFoundException;
 
 public class SearchSite {
     String SiteURL;
@@ -21,11 +21,12 @@ class Riss extends SearchSite {
     Riss(String search, PrintStream fo) throws FileNotFoundException {
         this.search = search;
         this.SiteURL = "http://www.riss.kr/index.do";
+
         HashMap<String,String> searchOpt = new HashMap();
-        searchOpt.put("Dissertation","&cate=bib_t");
-        searchOpt.put("Domestic Journal Paper","&cate=re_a_kor");
-        searchOpt.put("Foreign Journal","&cate=re_a_over");
         String []Opt = {"Dissertation","Domestic Journal Paper","Foreign Journal"};
+        searchOpt.put(Opt[0],"&cate=bib_t");
+        searchOpt.put(Opt[1],"&cate=re_a_kor");
+        searchOpt.put(Opt[2],"&cate=re_a_over");
 
         for(int i=0; i<3; i++) {
             this.url_1 = "http://www.riss.kr/search/Search.do?detailSearch=false&searchGubun=true&oldQuery=&query="

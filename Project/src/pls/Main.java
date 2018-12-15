@@ -12,10 +12,11 @@ public class Main {
 
         while (true) {
             System.out.print("Enter Keywords To Search: ");
-            scan = new Scanner(System.in);
+            scan = new Scanner(System.in, "EUC_KR");
             search = scan.nextLine();
             if(search.equals("-q"))
                 break;
+            System.out.println(search);
             FileManage fm = new FileManage(search);
             new Riss(search,fm.fileout());
             new GoogleScholar(search, fm.fileout());
