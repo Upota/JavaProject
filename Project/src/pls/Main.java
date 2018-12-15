@@ -16,7 +16,6 @@ public class Main {
             search = scan.nextLine();
             if(search.equals("-q"))
                 break;
-            System.out.println(search);
             FileManage fm = new FileManage(search);
             new Riss(search,fm.fileout());
             new GoogleScholar(search, fm.fileout());
