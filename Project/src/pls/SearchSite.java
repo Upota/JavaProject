@@ -1,6 +1,7 @@
 package pls;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.HashMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,7 +18,7 @@ public class SearchSite {
 }
 
 class Riss extends SearchSite {
-    Riss(String search) throws FileNotFoundException {
+    Riss(String search, PrintStream fo) throws FileNotFoundException {
         this.search = search;
         this.SiteURL = "http://www.riss.kr/index.do";
         HashMap<String,String> searchOpt = new HashMap();
@@ -38,28 +39,28 @@ class Riss extends SearchSite {
                 e.printStackTrace();
             }
          
-            System.out.println("Site Name: RISS");
-            System.out.println("URL: " + SiteURL);
-            System.out.println("SearchRink: " + url_1);
-            System.out.println("-------------------------------------------");
+            fo.println("Site Name: RISS");
+            fo.println("URL: " + SiteURL);
+            fo.println("SearchRink: " + url_1);
+            fo.println("-------------------------------------------");
             
             Elements list = doc.select(".degree");
             int count = 1;
             for (Element el : list.select("li")) {
-                System.out.println("Number " + count++);
-                System.out.println("Category: " + Opt[i]);
-                System.out.println("Title: "+ el.select(".txt > a").text());
-                System.out.println("Author: "+ el.select(".etc").text());
-                System.out.println("Rink: " + el.select("[href]").attr("abs:href").toString());
-                System.out.println("-------------------------------------------");
-                System.out.println();
+                fo.println("Number " + count++);
+                fo.println("Category: " + Opt[i]);
+                fo.println("Title: "+ el.select(".txt > a").text());
+                fo.println("Author: "+ el.select(".etc").text());
+                fo.println("Rink: " + el.select("[href]").attr("abs:href").toString());
+                fo.println("-------------------------------------------");
+                fo.println();
             }
         }
     }
 }
 
 class GoogleScholar extends SearchSite {
-    GoogleScholar(String search) throws FileNotFoundException {
+    GoogleScholar(String search,PrintStream fo) throws FileNotFoundException {
         this.SiteURL = "https://scholar.google.co.kr/";
         this.url_1 = "https://scholar.google.co.kr/scholar?hl=ko&as_sdt=0%2C5&q=" + search + "&btnG=";
     
@@ -69,34 +70,22 @@ class GoogleScholar extends SearchSite {
             e.printStackTrace();
         }
 
-        System.out.println("Site Name: Google Scholar");
-        System.out.println("URL: " + SiteURL);
-        System.out.println("SearchRink: " + url_1);
-        System.out.println("-------------------------------------------");
+        fo.println("Site Name: Google Scholar");
+        fo.println("URL: " + SiteURL);
+        fo.println("SearchRink: " + url_1);
+        fo.println("-------------------------------------------");
 
         Elements list = doc.select("#gs_res_ccl");
         int count = 1;
         for(Element el : list.select(".gs_ri")) {
-            System.out.println("Number " + count++);
-            System.out.println("Title: "+ el.select("h3 > a").text());
-            System.out.println("Author: "+ el.select(".gs_a").text());
-            System.out.println("Rink: " + el.select("[href]").attr("abs:href").toString());
-            System.out.println("-------------------------------------------");
-            System.out.println(); 
+            fo.println("Number " + count++);
+            fo.println("Title: "+ el.select("h3 > a").text());
+            fo.println("Author: "+ el.select(".gs_a").text());
+            fo.println("Rink: " + el.select("[href]").attr("abs:href").toString());
+            fo.println("-------------------------------------------");
+            fo.println(); 
         }
     }
 }
 
 //http://eds.b.ebscohost.com/eds/search/basic?vid=0&sid=76522b17-8618-4cb0-b900-c507d2537117%40pdc-v-sessmgr02
-class Kiss extends SearchSite { 
-    Kiss(String search) throws FileNotFoundException {
-        this.SiteURL = "http://search.koreanstudies.net/";
-        this.url_1 = "http://search.koreanstudies.net/search/sch-result.asp";
-
-        try {
-            doc = Jsoup.connect(url_1).post();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}

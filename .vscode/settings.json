@@ -1,3 +1,4 @@
 {
-    "maven.executable.path": "C:\\Users\\yujih\\apache-maven-3.6.0\\bin\\mvn.cmd"
+    "maven.executable.path": "C:\\Users\\yujih\\apache-maven-3.6.0\\bin\\mvn.cmd",
+    "files.autoGuessEncoding": true,
 }

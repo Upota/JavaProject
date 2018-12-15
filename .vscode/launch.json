@@ -3,7 +3,24 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
+    "configurations": [    
+    
+        {
+            "type": "java",
+            "name": "Debug (Launch) - External Terminal",
+            "request": "launch",
+            "console": "externalTerminal",
+            "mainClass": "pls.Main",
+            "projectName": "Project"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Integrated Terminal",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "mainClass": "pls.Main",
+            "projectName": "Project"
+        },
         {
             "type": "java",
             "name": "Debug (Launch) - Current File",
