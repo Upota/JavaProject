@@ -10,17 +10,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class SearchSite {
-    String SiteURL;
-    String url_1;
-    String search;
+    String SiteURL; // 논문 검색에 이용하는 사이트 URL
+    String url_1; // 검색결과를 나타내는 URL
+    String search; // 검색키워드
     Document doc;
 }
 
 class Riss extends SearchSite {
     Riss(String search, PrintStream fo) throws FileNotFoundException {
-        this.search = search;
+        this.search = search; 
         this.SiteURL = "http://www.riss.kr/index.do";
 
+        // Riss 사이트의 검색 범주 옵션을 이용하기 위한 작업
         HashMap<String,String> searchOpt = new HashMap();
         String []Opt = {"Dissertation","Domestic Journal Paper","Foreign Journal"};
         searchOpt.put(Opt[0],"&cate=bib_t");
@@ -33,7 +34,7 @@ class Riss extends SearchSite {
                     + "&x=0&y=0"
                     + searchOpt.get(Opt[i]);
            
-            try {
+            try { // Document 객체에 HTML문서를 가져온다.
                 doc = Jsoup.connect(url_1).get();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -44,6 +45,7 @@ class Riss extends SearchSite {
             fo.println("SearchRink: " + url_1);
             fo.println("-------------------------------------------");
             
+            // 정보를 가진 각 요소에 접근하여 파일에 출력
             Elements list = doc.select(".degree");
             int count = 1;
             for (Element el : list.select("li")) {

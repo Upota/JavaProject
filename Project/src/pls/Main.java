@@ -12,7 +12,7 @@ public class Main {
 
         while (true) {
             System.out.print("Enter Keywords To Search: ");
-            scan = new Scanner(System.in, "EUC_KR");
+            scan = new Scanner(System.in, "EUC_KR"); // 한글 검색을 하기 위함.
             search = scan.nextLine();
             if(search.equals("-q"))
                 break;
